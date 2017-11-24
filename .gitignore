@@ -34,11 +34,12 @@ captures/
 
 # Intellij
 *.iml
-.idea/workspace.xml
-.idea/tasks.xml
-.idea/gradle.xml
-.idea/dictionaries
-.idea/libraries
+**/.idea
+**/.idea/workspace.xml
+**/.idea/tasks.xml
+**/.idea/gradle.xml
+**/.idea/dictionaries
+**/.idea/libraries
 
 # Keystore files
 *.jks
@@ -53,3 +54,34 @@ google-services.json
 freeline.py
 freeline/
 freeline_project_description.json
+
+########################################################
+# Gradle
+########################################################
+
+**/.gradle
+**/gradle
+**/build/
+
+**/gradlew
+**/gradlew.bat
+
+# Ignore Gradle GUI config
+gradle-app.setting
+
+# Avoid ignoring Gradle wrapper jar file (.jar files are usually ignored)
+!**/gradle-wrapper.jar
+
+# Cache of project
+.gradletasknamecache
+
+# # Work around https://youtrack.jetbrains.com/issue/IDEA-116898
+# **/gradle/wrapper/gradle-wrapper.properties
+
+
+########################################################
+# Custom
+########################################################
+
+**/assets/*.pb
+**/assets/*.txt
