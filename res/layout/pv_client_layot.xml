@@ -9,8 +9,8 @@
 
     <View
         android:id="@+id/center"
-        android:layout_width="130dp"
-        android:layout_height="130dp"
+        android:layout_width="140dp"
+        android:layout_height="170dp"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true" />
 
