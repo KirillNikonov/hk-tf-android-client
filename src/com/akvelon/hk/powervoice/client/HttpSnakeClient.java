@@ -13,10 +13,13 @@ import okhttp3.Response;
 
 public class HttpSnakeClient {
 
+    private String id;
+
     //private final String URL = "http://10.0.9.167:9101";
     private final String URL = "http://10.0.9.222:9101";
 
-    public HttpSnakeClient() {
+    public HttpSnakeClient(String id) {
+        this.id = id;
     }
 
     public void sendPut(String command) throws Exception {
@@ -25,7 +28,7 @@ public class HttpSnakeClient {
 
         String json = "";
         JSONObject jsonObject = new JSONObject();
-        jsonObject.put("id", "kirill");
+        jsonObject.put("id", id);
         jsonObject.put("pwd", "password");
         jsonObject.put("cmd", command);
         json = jsonObject.toString();

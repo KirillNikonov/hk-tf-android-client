@@ -12,14 +12,14 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 
+import org.tensorflow.contrib.android.TensorFlowInferenceInterface;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.locks.ReentrantLock;
-import org.tensorflow.contrib.android.TensorFlowInferenceInterface;
-import com.akvelon.hk.powervoice.client.R;
 
 /**
  * An activity that listens for audio and then uses a TensorFlow model to detect particular classes,
@@ -35,12 +35,12 @@ public class PowerVoiceClientActivity extends Activity {
   private static final int SAMPLE_DURATION_MS = 1000;
   private static final int RECORDING_LENGTH = (int) (SAMPLE_RATE * SAMPLE_DURATION_MS / 1000);
   private static final long AVERAGE_WINDOW_DURATION_MS = 500;
-  private static final float DETECTION_THRESHOLD = 0.70f;
+  private static final float DETECTION_THRESHOLD = 0.85f;
   private static final int SUPPRESSION_MS = 1500;
   private static final int MINIMUM_COUNT = 3;
   private static final long MINIMUM_TIME_BETWEEN_SAMPLES_MS = 30;
-  private static final String MODEL_TYPE = "conv";
-  private static final String LABEL_FILENAME = "file:///android_asset/" + MODEL_TYPE + "_actions_labels.txt";
+  private static final String MODEL_TYPE = "low_latency_conv";
+  private static final String LABEL_FILENAME = "file:///android_asset/" + MODEL_TYPE + "_labels.txt";
   private static final String MODEL_FILENAME = "file:///android_asset/" + MODEL_TYPE + "_actions_frozen.pb";
   private static final String INPUT_DATA_NAME = "decoded_sample_data:0";
   private static final String SAMPLE_RATE_NAME = "decoded_sample_data:1";
@@ -279,7 +279,8 @@ public class PowerVoiceClientActivity extends Activity {
               String command = result.foundCommand;
               // If we do have a new command, highlight the right list entry.
               if (!command.startsWith("_") && result.isNewCommand) {
-                HttpSnakeClient httpClient = new HttpSnakeClient();
+                String deviceName = android.os.Build.MODEL;
+                HttpSnakeClient httpClient = new HttpSnakeClient(deviceName);
                 try {
                   httpClient.sendPut(command);
                 }
@@ -308,7 +309,7 @@ public class PowerVoiceClientActivity extends Activity {
                 if (arrow != null) {
                   ValueAnimator colorAnimation =
                           ValueAnimator.ofArgb(0x00b3ccff, 0xffb3ccff, 0x00b3ccff);
-                  colorAnimation.setDuration(750);
+                  colorAnimation.setDuration(250);
                   colorAnimation.addUpdateListener(
                     new ValueAnimator.AnimatorUpdateListener() {
                       @Override
